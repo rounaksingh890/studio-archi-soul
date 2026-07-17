@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Proposal/demo site shared directly with the owner; kept out of search. -->
+<meta name="robots" content="noindex, nofollow" />
+<title>Studio Archi Soul — Architecture &amp; Interiors in Panipat</title>
+<meta name="description" content="Studio Archi Soul, Panipat. Homes and offices designed by Ar. Arpan Sadana — architecture, elevations, interiors and colour, planned to your budget. 5.0★ on Google." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --espresso:#231c17; --char:#2c2621; --bone:#f4efe7; --paper:#ebe4d8; --white:#fff;
+    --ink:#292420; --ink-soft:#463d35; --stone:#8a7d6f; --stone-lt:#c7bcaa;
+    --ochre:#c97b3c; --ochre-lt:#e0a86a; --clay:#a8542f; --sand:#d8c6a6; --sage:#7f8a6a;
+    --line:rgba(41,36,32,.14); --line-d:rgba(255,255,255,.12);
+    --disp:'Syne',system-ui,sans-serif; --sans:'Manrope',system-ui,sans-serif;
+    --sh:0 34px 80px -34px rgba(35,28,23,.55); --sh-s:0 16px 38px -20px rgba(35,28,23,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bone);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  #bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(1000px 700px at 80% 4%, #6b4a30 0%, transparent 52%),
+      radial-gradient(900px 800px at 4% 100%, #40342a 0%, transparent 55%),
+      linear-gradient(180deg,#231c17 0%,#191410 100%)}
+  canvas#three{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+  main{position:relative;z-index:3}
+
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(18px,5vw,56px);transition:.4s}
+  header.nav.scrolled{background:rgba(25,20,16,.8);backdrop-filter:blur(14px);box-shadow:0 10px 30px -22px #000}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand .gl{width:30px;height:30px;position:relative;flex:none;transform:rotate(45deg)}
+  .brand .gl::before,.brand .gl::after{content:'';position:absolute;inset:0;border:1.5px solid var(--ochre-lt)}
+  .brand .gl::after{inset:7px;border-color:rgba(255,255,255,.5)}
+  .brand b{font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:2px;color:#fff}
+  .brand span{display:block;font-size:9px;letter-spacing:3px;color:var(--ochre-lt);margin-top:3px}
+  nav.links{display:flex;align-items:center;gap:26px}
+  nav.links a{font-size:13px;letter-spacing:.4px;text-decoration:none;color:#e6ddce;opacity:.82;transition:.2s}
+  nav.links a:hover{opacity:1;color:#fff}
+  .btn{display:inline-flex;align-items:center;gap:9px;border:none;cursor:pointer;font-family:var(--sans);font-weight:600;
+    font-size:13.5px;letter-spacing:.3px;padding:12px 22px;text-decoration:none;transition:.25s;white-space:nowrap;border-radius:1px}
+  .btn-ochre{background:var(--ochre);color:#1c130c}.btn-ochre:hover{background:var(--ochre-lt);transform:translateY(-2px)}
+  .btn-line{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.34)}.btn-line:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+  .btn-ink{background:var(--ink);color:#fff}.btn-ink:hover{background:var(--ink-soft);transform:translateY(-2px)}
+  .wa-ico{width:16px;height:16px;fill:currentColor}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(20px,6vw,84px) 90px;max-width:1260px;margin:0 auto}
+  .hero .eyebrow{font-family:var(--disp);font-size:12px;letter-spacing:6px;text-transform:uppercase;color:var(--ochre-lt);margin-bottom:22px}
+  .hero h1{font-family:var(--disp);font-weight:800;color:#fff;font-size:clamp(46px,9.5vw,118px);line-height:.94;margin:0;letter-spacing:-.5px}
+  .hero h1 em{font-style:normal;display:block;color:transparent;-webkit-text-stroke:1.4px var(--ochre-lt)}
+  .hero .tag{color:#e2d8c9;font-size:clamp(16px,2.2vw,23px);margin:28px 0 0;max-width:640px;line-height:1.55;font-weight:300}
+  .hero .tag b{color:#fff;font-weight:600}
+  .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+  .scrollcue{margin-top:52px;font-family:var(--disp);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--stone-lt)}
+
+  .build-stage{position:relative;z-index:3;height:165vh;pointer-events:none}
+  .build-cap{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:11vh;text-align:center}
+  .build-cap span{font-family:var(--disp);font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--ochre-lt)}
+  .build-cap b{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(22px,3.6vw,40px);color:#fff;margin-top:12px;letter-spacing:.3px}
+
+  .panel{position:relative;z-index:3}
+  .panel.bone{background:var(--bone)}.panel.paper{background:var(--paper)}.panel.dark{background:var(--espresso);color:#e9e0d2}
+  .wrap{max-width:1160px;margin:0 auto;padding:clamp(74px,10vw,132px) clamp(20px,5vw,44px)}
+  .kicker{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--clay);margin-bottom:18px}
+  .kicker::before{content:'';width:32px;height:1px;background:var(--ochre)}
+  .panel.dark .kicker{color:var(--ochre-lt)}
+  .headline{font-family:var(--disp);font-weight:700;color:var(--ink);font-size:clamp(32px,5vw,56px);line-height:1.03;margin:0 0 20px;letter-spacing:-.5px;max-width:16ch}
+  .panel.dark .headline{color:#fff}
+  .lead{color:var(--ink-soft);font-size:clamp(15px,1.8vw,18px);line-height:1.85;max-width:640px}
+  .panel.dark .lead{color:#cabfaf}
+
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-d);border-top:1px solid var(--line-d);border-bottom:1px solid var(--line-d)}
+  .stat{background:var(--espresso);padding:38px 26px;text-align:center}
+  .stat b{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(30px,4vw,46px);color:#fff;line-height:1}
+  .stat span{display:block;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--stone-lt);margin-top:10px}
+  .stat b .ac{color:var(--ochre-lt)}
+
+  /* ABOUT */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,70px);align-items:center}
+  .about .frame{aspect-ratio:1/1.16;position:relative;overflow:hidden;box-shadow:var(--sh);
+    background:radial-gradient(120% 90% at 30% 8%,#e0a86a 0%,transparent 52%),linear-gradient(150deg,#8a5a34,#2a1d14)}
+  .about .frame .grid{position:absolute;inset:0;opacity:.16;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:44px 44px}
+  .about .frame .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:clamp(110px,18vw,200px);color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.85)}
+  .about .frame .tg{position:absolute;left:22px;bottom:22px;color:#fff}
+  .about .frame .tg b{font-family:var(--disp);font-weight:700;font-size:20px;display:block;letter-spacing:.5px}
+  .about .frame .tg span{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ochre-lt)}
+  .about p{color:var(--ink-soft);line-height:1.9;margin:0 0 18px;font-size:15.5px}
+  .about .sign{font-family:var(--disp);font-weight:700;font-size:21px;color:var(--ink);margin-top:8px}
+  .about .sign span{display:block;font-family:var(--sans);font-weight:400;font-size:13px;color:var(--stone);margin-top:4px;letter-spacing:.5px}
+
+  /* APPROACH TIMELINE */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;position:relative}
+  .flow::before{content:'';position:absolute;top:19px;left:8%;right:8%;height:1px;background:rgba(255,255,255,.18)}
+  .step{position:relative;padding:0 18px;text-align:center}
+  .step .dot{width:14px;height:14px;border-radius:50%;background:var(--ochre);margin:12px auto 22px;position:relative;z-index:2;box-shadow:0 0 0 6px var(--espresso)}
+  .step h4{font-family:var(--disp);font-weight:700;font-size:20px;color:#fff;margin:0 0 8px}
+  .step p{color:#b7ac9c;font-size:13.5px;line-height:1.6;margin:0}
+
+  /* SERVICES */
+  .svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .svc{background:var(--white);border:1px solid var(--line);padding:34px 28px;transition:.35s}
+  .svc:hover{transform:translateY(-6px);box-shadow:var(--sh)}
+  .svc .ic{font-size:24px;width:52px;height:52px;display:grid;place-items:center;background:var(--paper);margin-bottom:18px}
+  .svc h4{font-family:var(--disp);font-weight:700;font-size:21px;color:var(--ink);margin:0 0 10px}
+  .svc p{color:var(--stone);font-size:14px;line-height:1.7;margin:0}
+  .svc .ln{width:52px;height:2px;background:var(--ochre);margin:16px 0 0;transform:scaleX(.5);transform-origin:left;transition:transform .35s}.svc:hover .ln{transform:scaleX(1)}
+
+  /* GALLERY */
+  .gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:16px}
+  .gi{position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:18px;color:#fff;transition:.4s;box-shadow:var(--sh-s)}
+  .gi:hover{transform:translateY(-4px)}
+  .gi b{font-family:var(--disp);font-weight:700;font-size:19px;position:relative;z-index:2;letter-spacing:.3px}
+  .gi small{position:relative;z-index:2;display:block;font-size:11px;color:var(--ochre-lt);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+  .gi::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(25,20,16,.76))}
+  .gi::before{content:'';position:absolute;inset:0;opacity:.35;background-image:linear-gradient(rgba(255,255,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.14) 1px,transparent 1px);background-size:26px 26px}
+  .k1{grid-column:span 2;grid-row:span 2;background:radial-gradient(120% 120% at 20% 10%,#e0a86a,transparent 55%),linear-gradient(150deg,#9c6238,#241a12)}
+  .k2{background:linear-gradient(145deg,#7d8264,#232619)}
+  .k3{background:linear-gradient(145deg,#b9713f,#37241a)}
+  .k4{grid-column:span 2;background:radial-gradient(120% 120% at 80% 20%,#dcbb84,transparent 55%),linear-gradient(120deg,#a5642f,#26190f)}
+  .k5{background:linear-gradient(145deg,#8a6a4c,#241812)}
+  .k6{background:linear-gradient(145deg,#6f6250,#221c15)}
+  .gnote{font-size:12.5px;color:var(--stone-lt);margin-top:18px}
+
+  /* PHILOSOPHY */
+  .philo{max-width:960px;margin:0 auto;text-align:center}
+  .philo blockquote{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.2vw,46px);line-height:1.22;color:#fff;margin:0;letter-spacing:-.5px}
+  .philo blockquote .ac{color:var(--ochre-lt)}
+  .philo cite{display:block;margin-top:28px;font-style:normal;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--stone-lt)}
+
+  /* REVIEWS */
+  .rhead{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:44px}
+  .rhead .big{font-family:var(--disp);font-weight:700;font-size:64px;color:var(--ink);line-height:1}
+  .rhead .st{color:var(--ochre);font-size:22px;letter-spacing:2px}.rhead .mt{color:var(--stone);font-size:14px}
+  .revs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .rev{background:var(--white);border:1px solid var(--line);padding:30px 28px}
+  .rev p{color:var(--ink-soft);font-size:14.5px;line-height:1.75;margin:0 0 20px}
+  .rev .who{display:flex;align-items:center;gap:12px}
+  .rev .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--ochre),var(--clay));display:grid;place-items:center;color:#fff;font-family:var(--disp);font-weight:700}
+  .rev .who b{display:block;font-size:13.5px;color:var(--ink)}.rev .who span{font-size:11.5px;color:var(--stone)}
+  .rev .who .g{margin-left:auto;font-size:11px;color:var(--clay)}
+
+  /* FAQ */
+  .faq{max-width:820px;margin:0 auto}
+  .qa{border-bottom:1px solid var(--line-d)}
+  .qa button{width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:24px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;
+    font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.2vw,21px);color:#fff}
+  .qa .sgn{flex:none;width:22px;height:22px;position:relative}
+  .qa .sgn::before,.qa .sgn::after{content:'';position:absolute;background:var(--ochre-lt);transition:.3s}
+  .qa .sgn::before{top:10px;left:0;right:0;height:2px}
+  .qa .sgn::after{left:10px;top:0;bottom:0;width:2px}
+  .qa.open .sgn::after{transform:scaleY(0)}
+  .qa .ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+  .qa.open .ans{grid-template-rows:1fr}
+  .qa .ans>p{overflow:hidden;min-height:0;color:#bcb1a1;line-height:1.8;font-size:15px;margin:0 0 24px;max-width:70ch}
+
+  /* VISIT */
+  .visit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px)}
+  .visit h3{font-family:var(--disp);font-weight:700;font-size:30px;color:var(--ink);margin:0 0 26px}
+  .vrow{display:flex;gap:15px;padding:16px 0;border-bottom:1px solid var(--line)}.vrow:last-child{border-bottom:none}
+  .vrow .vi{width:40px;height:40px;flex:none;background:var(--paper);display:grid;place-items:center;font-size:17px}
+  .vrow b{display:block;font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--clay);margin-bottom:4px}
+  .vrow p{margin:0;color:var(--ink);font-size:15px;line-height:1.55}
+  .vrow a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(41,36,32,.3)}
+  .mapcard{position:relative;overflow:hidden;min-height:340px;display:flex;align-items:flex-end;padding:26px;color:#fff;text-decoration:none;box-shadow:var(--sh);
+    background:radial-gradient(140% 120% at 20% 0%,#e0a86a 0%,transparent 45%),linear-gradient(150deg,#8a5a34,#231c17)}
+  .mapcard .grd{position:absolute;inset:0;opacity:.16;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:40px 40px}
+  .mapcard .pin{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%)}
+  .mapcard .pin .dot{width:16px;height:16px;background:var(--ochre-lt);border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 0 0 7px rgba(224,168,106,.14)}
+  .mapcard .mb{position:relative;z-index:2}.mapcard .mb b{font-family:var(--disp);font-weight:700;font-size:20px;display:block}.mapcard .mb span{font-size:12px;color:var(--ochre-lt)}
+
+  /* OWNER NOTE */
+  .ownote{max-width:780px;margin:0 auto;text-align:center;padding:clamp(32px,4vw,46px);border:1.5px dashed var(--ochre);background:rgba(255,255,255,.03)}
+  .ownote .bd{display:inline-block;font-family:var(--disp);font-weight:600;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--ochre-lt);border:1px solid var(--ochre);padding:6px 15px;margin-bottom:16px}
+  .ownote h3{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.6vw,34px);color:#fff;margin:0 0 12px}
+  .ownote p{color:#c2b7a7;line-height:1.75;font-size:15.5px;margin:0 auto 20px;max-width:580px}
+  .ownote .pill{display:inline-block;font-family:var(--sans);font-weight:600;font-size:13px;color:#1c130c;background:var(--ochre);padding:11px 22px}
+
+  footer{position:relative;z-index:3;background:#17110d;color:#c2b7a7;padding:62px clamp(20px,5vw,44px) 40px}
+  footer .fin{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-end}
+  footer .fbrand{font-family:var(--disp);font-weight:700;font-size:26px;letter-spacing:2px;color:#fff}
+  footer .fbrand span{display:block;font-size:11px;letter-spacing:2px;color:var(--ochre-lt);margin-top:6px}
+  footer .fsoc{display:flex;gap:12px}
+  footer .fsoc a{width:40px;height:40px;border:1px solid var(--line-d);display:grid;place-items:center;color:#c2b7a7;transition:.25s}
+  footer .fsoc a:hover{border-color:var(--ochre-lt);color:#fff}
+  footer .fmeta{max-width:1160px;margin:34px auto 0;padding-top:22px;border-top:1px solid var(--line-d);font-size:12.5px;color:var(--stone);line-height:1.8}
+
+  .fab{position:fixed;right:20px;bottom:20px;z-index:30;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 12px 26px -10px rgba(0,0,0,.5);transition:.25s}
+  .fab:hover{transform:scale(1.08)}.fab svg{width:29px;height:29px;fill:#fff}
+
+  @media(max-width:900px){
+    nav.links a{display:none}
+    .stats{grid-template-columns:1fr 1fr}
+    .about{grid-template-columns:1fr}.about .frame{max-width:400px;order:-1}
+    .flow{grid-template-columns:1fr 1fr;gap:30px 0}.flow::before{display:none}
+    .svcs{grid-template-columns:1fr 1fr}
+    .gal{grid-template-columns:repeat(2,1fr)}.k1{grid-column:span 2}.k4{grid-column:span 2}
+    .revs{grid-template-columns:1fr}.visit{grid-template-columns:1fr}
+    footer .fin{flex-direction:column;align-items:flex-start}
+  }
+  @media(max-width:560px){.stats{grid-template-columns:1fr 1fr}.svcs{grid-template-columns:1fr}.cta{width:100%}.cta .btn{flex:1;justify-content:center}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<div id="bg" aria-hidden="true"></div>
+<canvas id="three" aria-hidden="true"></canvas>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Studio Archi Soul home">
+    <span class="gl" aria-hidden="true"></span>
+    <span><b>STUDIO ARCHI SOUL</b><span>Panipat · Architecture</span></span>
+  </a>
+  <nav class="links" aria-label="Primary">
+    <a href="#about">Studio</a><a href="#approach">Approach</a><a href="#services">Services</a><a href="#work">Work</a><a href="#reviews">Reviews</a>
+    <a class="btn btn-ochre" href="https://wa.me/917015791406?text=Hi%20Arpan%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20Studio%20Archi%20Soul." target="_blank" rel="noopener">
+      <svg class="wa-ico" viewBox="0 0 24 24"><path d="M.06 24l1.68-6.15A11.87 11.87 0 010 5.94 11.94 11.94 0 0111.94 0 11.94 11.94 0 0124 5.95a11.94 11.94 0 01-17.9 10.3L.06 24zM6.6 20.13l.36.22a9.9 9.9 0 005.04 1.38A9.92 9.92 0 0022 5.95 9.9 9.9 0 0011.94 2 9.92 9.92 0 003.3 16.9l.24.38-1 3.65 4.06-.8z"/></svg>Enquire</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="eyebrow reveal in">Architecture · Interiors · Elevations</div>
+    <h1 class="reveal in" style="transition-delay:.08s">Studio<br>Archi<em>Soul</em></h1>
+    <p class="tag reveal in" style="transition-delay:.18s">Homes and offices with a soul, designed by <b>Ar. Arpan Sadana</b> in
+      Panipat, and always planned to your budget. A perfect <b>5.0★</b> across 27 Google reviews.</p>
+    <div class="cta reveal in" style="transition-delay:.28s">
+      <a class="btn btn-ochre" href="https://wa.me/917015791406?text=Hi%20Arpan%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20Studio%20Archi%20Soul." target="_blank" rel="noopener">
+        <svg class="wa-ico" viewBox="0 0 24 24"><path d="M.06 24l1.68-6.15A11.87 11.87 0 010 5.94 11.94 11.94 0 0111.94 0 11.94 11.94 0 0124 5.95a11.94 11.94 0 01-17.9 10.3L.06 24zM6.6 20.13l.36.22a9.9 9.9 0 005.04 1.38A9.92 9.92 0 0022 5.95 9.9 9.9 0 0011.94 2 9.92 9.92 0 003.3 16.9l.24.38-1 3.65 4.06-.8z"/></svg>Start your project</a>
+      <a class="btn btn-line" href="tel:+917015791406">Call +91 70157 91406</a>
+    </div>
+    <div class="scrollcue reveal in" style="transition-delay:.42s">scroll to build ↓</div>
+  </section>
+
+  <section class="build-stage" aria-hidden="true">
+    <div class="build-cap"><span>Idea → structure → home</span><b>A house, built before your eyes.</b></div>
+  </section>
+
+  <!-- STATS -->
+  <section class="panel dark">
+    <div class="stats" id="stats">
+      <div class="stat"><b><span class="ac" data-count="5.0">0.0</span>★</b><span>Google rating</span></div>
+      <div class="stat"><b><span data-count="27">0</span></b><span>Five-star reviews</span></div>
+      <div class="stat"><b>Homes<span class="ac"> + </span>Offices</b><span>Residential &amp; commercial</span></div>
+      <div class="stat"><b>Budget-<span class="ac">first</span></b><span>Designed to your number</span></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="panel bone" id="about">
+    <div class="wrap about">
+      <div class="frame reveal"><div class="grid"></div><div class="mono">AS</div>
+        <div class="tg"><b>Ar. Arpan Sadana</b><span>Principal Architect</span></div></div>
+      <div>
+        <p class="kicker reveal">The Studio</p>
+        <h2 class="headline reveal d1">An architect who treats your project like his own.</h2>
+        <p class="reveal d1">Studio Archi Soul is led by <b>Ar. Arpan Sadana</b>, an architect Panipat clients describe
+          as passionate, meticulous and genuinely invested. Homes, offices and everything in between, shaped with
+          strong plans, considered colour and a clear sense of how a space should feel.</p>
+        <p class="reveal d2">What clients mention most is the care: the studio takes on a project as if building its
+          own, shows you the design before a single brick is laid, and keeps it firmly within your budget. It's
+          earned a spotless <b>5.0-star</b> rating across 27 reviews.</p>
+        <div class="sign reveal d3">Ar. Arpan Sadana<span>Founder, Studio Archi Soul · Panipat</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section class="panel dark" id="approach">
+    <div class="wrap">
+      <p class="kicker reveal">How we work</p>
+      <h2 class="headline reveal d1">Four honest steps, no surprises</h2>
+      <p class="lead reveal d2">The reason clients relax: you always know what's coming next, and you sign off on the
+        design before anything gets built.</p>
+      <div class="flow">
+        <div class="step reveal"><div class="dot"></div><h4>Listen</h4><p>Your plot, your family, how you live, and the budget you're working to.</p></div>
+        <div class="step reveal d1"><div class="dot"></div><h4>Design</h4><p>Plans, elevations, colour and material, shaped around all of the above.</p></div>
+        <div class="step reveal d2"><div class="dot"></div><h4>Review together</h4><p>You see the design and adjust it with us, before a single brick is laid.</p></div>
+        <div class="step reveal d3"><div class="dot"></div><h4>Build</h4><p>Execution carried through with the same care, right up to handover.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="panel paper" id="services">
+    <div class="wrap">
+      <p class="kicker reveal">Capabilities</p>
+      <h2 class="headline reveal d1">Everything a space needs, under one roof</h2>
+      <div class="svcs" style="margin-top:44px">
+        <div class="svc reveal"><div class="ic">🏠</div><h4>Residential Architecture</h4>
+          <p>Full home design, from plot planning to floor plans built around how your family lives.</p><div class="ln"></div></div>
+        <div class="svc reveal d1"><div class="ic">🏢</div><h4>Office &amp; Commercial</h4>
+          <p>Workspaces designed to look classy and work hard, delivered within budget.</p><div class="ln"></div></div>
+        <div class="svc reveal d2"><div class="ic">🏛️</div><h4>Elevation Design</h4>
+          <p>Front elevations with real character, so your building stands out for the right reasons.</p><div class="ln"></div></div>
+        <div class="svc reveal"><div class="ic">🛋️</div><h4>Interior Design</h4>
+          <p>Interiors detailed to match the architecture, from layouts to finishes and lighting.</p><div class="ln"></div></div>
+        <div class="svc reveal d1"><div class="ic">🎨</div><h4>Colour &amp; Material</h4>
+          <p>A signature strength: colour schemes and materials chosen so everything sits together.</p><div class="ln"></div></div>
+        <div class="svc reveal d2"><div class="ic">📋</div><h4>Budget Planning</h4>
+          <p>Designs shaped to a real number from day one, with room to add more only if you choose.</p><div class="ln"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="panel dark" id="work">
+    <div class="wrap">
+      <p class="kicker reveal">Selected Work</p>
+      <h2 class="headline reveal d1">Homes and offices across Panipat</h2>
+      <div class="gal" style="margin-top:36px">
+        <div class="gi k1 reveal"><div><small>Residential</small><b>Home Elevations</b></div></div>
+        <div class="gi k2 reveal d1"><div><small>Workspace</small><b>Office Design</b></div></div>
+        <div class="gi k3 reveal d2"><div><small>Colour</small><b>Schemes &amp; Material</b></div></div>
+        <div class="gi k4 reveal d1"><div><small>Interior</small><b>Living Spaces</b></div></div>
+        <div class="gi k5 reveal d2"><div><small>Planning</small><b>Floor Plans</b></div></div>
+        <div class="gi k6 reveal d3"><div><small>Detail</small><b>Facades</b></div></div>
+      </div>
+      <p class="gnote reveal">✎ Placeholder tiles, ready for Studio Archi Soul's real project photos and renders, they drop straight in.</p>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="panel dark" style="padding-top:0">
+    <div class="wrap philo" style="padding-top:0">
+      <blockquote class="reveal">“He takes on a project like he's building his <span class="ac">own</span> property, and still keeps it within your budget.”</blockquote>
+      <cite class="reveal d1">— the theme running through Studio Archi Soul's reviews</cite>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="panel bone" id="reviews">
+    <div class="wrap">
+      <div class="rhead reveal"><span class="big">5.0</span><span class="st">★★★★★</span><span class="mt">from 27 Google reviews</span></div>
+      <div class="revs">
+        <div class="rev reveal"><p>Great experience with Mr. Arpan Sadana. He designed my home, and his design sense and
+          cooperation in everything is too good. I greatly recommend Studio Archi Soul to everyone.</p>
+          <div class="who"><div class="av">A</div><div><b>Ashish Goyal</b><span>Home project</span></div><span class="g">★ Google</span></div></div>
+        <div class="rev reveal d1"><p>I'd highly recommend Arpan to anyone looking for an exceptional architect. The passion
+          for design, commitment to quality and dedication to client satisfaction make for an outstanding professional.</p>
+          <div class="who"><div class="av">S</div><div><b>Sanket Mehta</b><span>Architecture</span></div><span class="g">★ Google</span></div></div>
+        <div class="rev reveal d2"><p>One of the best architects. Takes the project like they're building their own property,
+          and plans to a minimal budget so we can go ahead. They show us the design first and check if we want to add more.</p>
+          <div class="who"><div class="av">R</div><div><b>Rahul Nanda</b><span>Home design</span></div><span class="g">★ Google</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="panel dark" id="faq">
+    <div class="wrap">
+      <p class="kicker reveal">Good to know</p>
+      <h2 class="headline reveal d1">Questions clients usually ask</h2>
+      <div class="faq" style="margin-top:36px">
+        <div class="qa reveal"><button aria-expanded="false"><span>Do you design offices as well as homes?</span><span class="sgn"></span></button>
+          <div class="ans"><p>Yes. Studio Archi Soul designs both residential and commercial spaces, from family homes to classy, functional offices.</p></div></div>
+        <div class="qa reveal"><button aria-expanded="false"><span>Will I see the design before construction starts?</span><span class="sgn"></span></button>
+          <div class="ans"><p>Always. You review the design with us and adjust it together, and nothing is built until you're happy with it.</p></div></div>
+        <div class="qa reveal"><button aria-expanded="false"><span>Can you work within a fixed budget?</span><span class="sgn"></span></button>
+          <div class="ans"><p>Budget comes first. Designs are shaped to your number from day one, and you only add more if you choose to.</p></div></div>
+        <div class="qa reveal"><button aria-expanded="false"><span>Which areas do you serve?</span><span class="sgn"></span></button>
+          <div class="ans"><p>The studio is based in HUDA, Panipat, and works across Panipat and the surrounding areas.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section class="panel paper" id="visit">
+    <div class="wrap visit">
+      <div>
+        <h3 class="reveal">Visit the studio</h3>
+        <div class="vrow reveal"><div class="vi">📍</div><div><b>Studio</b><p>Housing Board, 2341, Sector 13-17,<br>HUDA, Panipat, Haryana 132104</p></div></div>
+        <div class="vrow reveal d1"><div class="vi">🕙</div><div><b>Hours</b><p>Mon–Sat · opens 10 AM<br>(site visits by appointment)</p></div></div>
+        <div class="vrow reveal d2"><div class="vi">📞</div><div><b>Call / WhatsApp</b><p><a href="tel:+917015791406">+91 70157 91406</a></p></div></div>
+        <div class="vrow reveal d3"><div class="vi">💬</div><div><b>Enquire</b><p><a href="https://wa.me/917015791406?text=Hi%20Arpan%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20Studio%20Archi%20Soul." target="_blank" rel="noopener">Message on WhatsApp →</a></p></div></div>
+      </div>
+      <a class="mapcard reveal d1" href="https://www.google.com/maps/place/Studio+Archi+Soul/data=!4m7!3m6!1s0x390dd95d1d09dabd:0x4b7712e516ae9cdc!8m2!3d29.4284811!4d76.9817353!16s%2Fg%2F11lg3rccry" target="_blank" rel="noopener" aria-label="Studio Archi Soul on Google Maps">
+        <div class="grd"></div><div class="pin"><div class="dot"></div></div>
+        <div class="mb"><b>Get Directions →</b><span>Sector 13-17, HUDA, Panipat · CXHJ+9M</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- OWNER NOTE -->
+  <section class="panel dark" aria-label="A note for the owner">
+    <div class="wrap" style="padding-top:0">
+      <div class="ownote reveal">
+        <span class="bd">A note for Arpan ✎</span>
+        <h3>Put this on your own name</h3>
+        <p>Like it? You can make this yours, on your <b>own domain</b> like <b>studioarchisoul.in</b>, with your real
+          project photos and renders added and everything set up for you, at a minimal cost. Just reply to my
+          WhatsApp message and it's done.</p>
+        <span class="pill">Reply on WhatsApp to claim your own domain</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fin">
+      <div class="fbrand">STUDIO ARCHI SOUL<span>ARCHITECTURE · INTERIORS · ELEVATIONS · PANIPAT</span></div>
+      <div class="fsoc">
+        <a href="https://wa.me/917015791406" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.68-6.15A11.87 11.87 0 010 5.94 11.94 11.94 0 0111.94 0 11.94 11.94 0 0124 5.95a11.94 11.94 0 01-17.9 10.3L.06 24zM6.6 20.13l.36.22a9.9 9.9 0 005.04 1.38A9.92 9.92 0 0022 5.95 9.9 9.9 0 0011.94 2 9.92 9.92 0 003.3 16.9l.24.38-1 3.65 4.06-.8z"/></svg></a>
+        <a href="tel:+917015791406" aria-label="Call"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.5 15.5 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.3 1z"/></svg></a>
+      </div>
+    </div>
+    <p class="fmeta">Housing Board, 2341, Sector 13-17, HUDA, Panipat 132104 · Opens 10 AM<br>© 2026 Studio Archi Soul · Panipat, Haryana</p>
+  </footer>
+</main>
+
+<a class="fab" href="https://wa.me/917015791406?text=Hi%20Arpan%2C%20I%27d%20like%20to%20discuss%20a%20project%20with%20Studio%20Archi%20Soul." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M.06 24l1.68-6.15A11.87 11.87 0 010 5.94 11.94 11.94 0 0111.94 0 11.94 11.94 0 0124 5.95a11.94 11.94 0 01-17.9 10.3L.06 24zM6.6 20.13l.36.22a9.9 9.9 0 005.04 1.38A9.92 9.92 0 0022 5.95 9.9 9.9 0 0011.94 2 9.92 9.92 0 003.3 16.9l.24.38-1 3.65 4.06-.8z"/><path d="M9.1 6.4c-.22-.5-.46-.5-.67-.51h-.57a1.1 1.1 0 00-.8.37 3.35 3.35 0 00-1.04 2.5 5.83 5.83 0 001.22 3.08c.15.2 2.1 3.36 5.2 4.58 2.57 1 3.1.8 3.66.75.56-.05 1.8-.73 2.05-1.45.26-.7.26-1.32.18-1.44-.07-.13-.27-.2-.57-.35s-1.8-.9-2.07-1c-.28-.1-.48-.15-.68.15-.2.3-.78.99-.95 1.19-.18.2-.35.22-.65.07a8.24 8.24 0 01-2.44-1.5 9.1 9.1 0 01-1.68-2.1c-.18-.3 0-.47.13-.62.13-.13.3-.35.44-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52C10.1 8.72 9.4 7 9.1 6.4z"/></svg>
+</a>
+
+<script>
+// FAQ accordion
+document.querySelectorAll('.qa button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const open=b.parentElement.classList.toggle('open');
+    b.setAttribute('aria-expanded',open);
+  });
+});
+</script>
+<script type="module">
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// stat counters
+const statObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(!e.isIntersecting)return; statObs.unobserve(e.target);
+  e.target.querySelectorAll('[data-count]').forEach(el=>{
+    const tgt=parseFloat(el.dataset.count), dec=el.dataset.count.includes('.'), t0=performance.now();
+    (function step(t){const k=Math.min(1,(t-t0)/1100); const v=tgt*(1-Math.pow(1-k,3));
+      el.textContent=dec?v.toFixed(1):Math.round(v); if(k<1)requestAnimationFrame(step);})(t0);
+  });
+});},{threshold:.4});
+const st=document.getElementById('stats'); if(st)statObs.observe(st);
+
+try{
+  const THREE=await import('three');
+  const {RoomEnvironment}=await import('three/addons/environments/RoomEnvironment.js');
+  const canvas=document.getElementById('three');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+  renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.06;
+  const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x231c17,0.028);
+  const camera=new THREE.PerspectiveCamera(41,innerWidth/innerHeight,0.1,100);
+  try{const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(new RoomEnvironment(),0.04).texture;}catch(e){}
+  scene.add(new THREE.HemisphereLight(0xffe3c0,0x241a12,0.85));
+  const sun=new THREE.DirectionalLight(0xffd8a0,2.1); sun.position.set(6,8,4); scene.add(sun);
+  const warm=new THREE.PointLight(0xffb060,0,50); warm.position.set(-4,2,5); scene.add(warm);
+
+  const mk=(c,r,m)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m||0,transparent:true,opacity:0});
+  const M={concrete:mk(0xdcd6ca,.9),warmwall:mk(0xe7dcc8,.85),wood:mk(0x9c6a3f,.6),glass:mk(0xbfe0e6,.1,.1),
+    ochre:mk(0xc97b3c,.4,.3),trunk:mk(0x6b4a30,.8),leaf:mk(0x7f8a6a,.75),deck:mk(0x8a5f3c,.7)};
+  M.glass.opacity=0;
+  const edge=new THREE.LineBasicMaterial({color:0xe0a86a,transparent:true,opacity:.9});
+  const edge2=new THREE.LineBasicMaterial({color:0xbfe0e6,transparent:true,opacity:.9});
+
+  const b=new THREE.Group(); scene.add(b);
+  const center=new THREE.Vector3(0,1.4,0); const parts=[];
+  function add(geo,mat,x,y,z,ge){
+    const mesh=new THREE.Mesh(geo,mat); const line=new THREE.LineSegments(new THREE.EdgesGeometry(geo),ge||edge);
+    const g=new THREE.Group(); g.add(mesh,line);
+    const A=new THREE.Vector3(x,y,z); const dir=A.clone().sub(center); if(dir.length()<.2)dir.set(Math.random()-.5,Math.random(),Math.random()-.5); dir.normalize();
+    const E=A.clone().add(dir.multiplyScalar(2.8+Math.random()*2.6)); E.y+=(Math.random()-.2)*2;
+    g.userData={A,E,se:new THREE.Euler((Math.random()-.5)*1.1,(Math.random()-.5)*1.5,(Math.random()-.5)*1.1)};
+    g.position.copy(E); b.add(g); parts.push(g); return g;
+  }
+  const bx=(w,h,d)=>new THREE.BoxGeometry(w,h,d);
+  // ground + deck + water
+  add(bx(6.2,0.16,4.6),M.concrete,0,0.08,0);
+  add(bx(2.2,0.06,1.4),M.glass,-2.0,0.14,1.6,edge2);      // water/reflect pool
+  // ground floor
+  add(bx(4.6,1.4,0.14),M.warmwall,0,0.85,-2.1);
+  add(bx(0.14,1.4,4.2),M.warmwall,-2.3,0.85,0);
+  add(bx(1.5,1.4,0.14),M.warmwall,-1.55,0.85,2.1);
+  add(bx(2.4,1.4,0.08),M.glass,0.9,0.85,2.1,edge2);       // front glass
+  // columns
+  [[-2.0,-1.9],[2.0,-1.9],[2.0,1.9]].forEach(([x,z])=>add(new THREE.CylinderGeometry(0.1,0.1,1.5,18),M.concrete,x,0.9,z));
+  // first slab (cantilever)
+  add(bx(5.0,0.16,4.6),M.concrete,0.2,1.6,0);
+  // upper floor
+  add(bx(4.6,1.25,0.14),M.warmwall,0,2.3,-2.1);
+  add(bx(0.14,1.25,4.2),M.warmwall,-2.3,2.3,0);
+  add(bx(4.4,1.25,0.09),M.glass,0.3,2.3,2.15,edge2);      // upper glass facade
+  add(bx(0.14,1.25,4.2),M.warmwall,2.5,2.3,0);
+  // roof + pergola + fin
+  add(bx(5.4,0.16,4.9),M.concrete,0.2,3.0,0);
+  for(let i=0;i<6;i++)add(bx(0.1,0.1,2.4),M.wood,-1.6+i*0.42,3.12,1.9);  // pergola slats
+  add(bx(0.32,3.2,0.32),M.ochre,2.5,1.5,1.9,edge);        // warm ochre fin
+  add(bx(2.4,0.14,0.9),M.concrete,-1.2,3.0,2.6);          // canopy
+  // steps
+  for(let i=0;i<3;i++)add(bx(1.6-i*0.1,0.12,0.4),M.concrete,0.9,0.06+i*0.12,2.5+i*0.34);
+  // tree (landscape) — always at home, gently sways
+  const tree=new THREE.Group();
+  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.13,1.5,10),M.trunk); trunk.position.y=0.75; tree.add(trunk);
+  [[0,1.6,0,0.55],[0.2,1.9,0.1,0.42],[-0.2,1.8,-0.1,0.4]].forEach(([x,y,z,r])=>{const f=new THREE.Mesh(new THREE.IcosahedronGeometry(r,0),M.leaf);f.position.set(x,y,z);tree.add(f);});
+  const tg=add(bx(0.01,0.01,0.01),M.leaf,-2.8,0,1.7); tg.add(tree); tg.userData.tree=true;
+
+  const PN=reduce?200:(innerWidth<760?500:1100);
+  const pg=new THREE.BufferGeometry(),pp=new Float32Array(PN*3);
+  for(let i=0;i<PN;i++){pp[i*3]=(Math.random()-.5)*24;pp[i*3+1]=Math.random()*12-1;pp[i*3+2]=(Math.random()-.5)*16;}
+  pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+  const dust=new THREE.Points(pg,new THREE.PointsMaterial({size:.025,color:0xe8c79a,transparent:true,opacity:.5,depthWrite:false}));
+  scene.add(dust);
+
+  let targetScroll=0,scroll=0,tpx=0,tpy=0,px=0,py=0;
+  const stage=()=>innerHeight*1.95;
+  addEventListener('scroll',()=>{targetScroll=Math.min(1,scrollY/stage());},{passive:true});
+  addEventListener('pointermove',e=>{tpx=e.clientX/innerWidth-.5;tpy=e.clientY/innerHeight-.5;},{passive:true});
+  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; const sm=(a,b2,e)=>a+(b2-a)*e;
+  const clock=new THREE.Clock(); let running=true;
+  document.addEventListener('visibilitychange',()=>{running=!document.hidden;if(running)animate();});
+  function animate(){
+    if(!running)return; requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    scroll=sm(scroll,targetScroll,.06); px=sm(px,tpx,.05); py=sm(py,tpy,.05);
+    const p=ease(Math.min(1,scroll));
+    const fade=Math.min(1,Math.max(0,(p-.15)/.7));
+    for(const k in M){M[k].opacity=(k==='glass'?.34:1)*fade;}
+    edge.opacity=.18+(1-fade)*.72; edge2.opacity=.2+(1-fade)*.7;
+    warm.intensity=p*p*26; dust.material.opacity=.12+(1-p)*.45;
+    parts.forEach(g=>{const u=g.userData;
+      if(u.tree){g.position.copy(u.A); g.rotation.z=Math.sin(t*0.6)*0.02;}
+      else{g.position.lerpVectors(u.E,u.A,p); g.rotation.set(u.se.x*(1-p),u.se.y*(1-p),u.se.z*(1-p));}});
+    b.rotation.y=(-0.5+scroll*0.85)+px*0.22;
+    const ang=-0.5+p*0.6+px*0.14, rad=11-p*3.8;
+    camera.position.set(Math.sin(ang)*rad, 3.4-p*0.7-py*0.8, Math.cos(ang)*rad);
+    camera.lookAt(0,1.5+p*0.1,0);
+    dust.rotation.y=t*0.01; renderer.render(scene,camera);
+  }
+  animate();
+  addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));},{passive:true});
+}catch(err){ console.warn('3D scene skipped:',err); }
+</script>
+</body>
+</html>
