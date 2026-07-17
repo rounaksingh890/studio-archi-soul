@@ -541,8 +541,10 @@ try{
       if(u.tree){g.position.copy(u.A); g.rotation.z=Math.sin(t*0.6)*0.02;}
       else{g.position.lerpVectors(u.E,u.A,p); g.rotation.set(u.se.x*(1-p),u.se.y*(1-p),u.se.z*(1-p));}});
     b.rotation.y=(-0.5+scroll*0.85)+px*0.22;
-    const ang=-0.5+p*0.6+px*0.14, rad=11-p*3.8;
-    camera.position.set(Math.sin(ang)*rad, 3.4-p*0.7-py*0.8, Math.cos(ang)*rad);
+    const ang=-0.5+p*0.6+px*0.14;
+    const fit=Math.min(2.6,Math.max(1,1.4/camera.aspect));
+    const rad=(11-p*3.8)*fit;
+    camera.position.set(Math.sin(ang)*rad, (3.4-p*0.7)*fit-py*0.8, Math.cos(ang)*rad);
     camera.lookAt(0,1.5+p*0.1,0);
     dust.rotation.y=t*0.01; renderer.render(scene,camera);
   }
